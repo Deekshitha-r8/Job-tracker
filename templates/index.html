@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JobTrackr — Your Internship Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">◎</span>
+        <span>JobTrackr</span>
+      </div>
+      <a href="/add" class="btn-add">+ Add Application</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Stats Row -->
+    <section class="stats-row">
+      <div class="stat-card total">
+        <div class="stat-num">{{ stats['total'] or 0 }}</div>
+        <div class="stat-label">Total Applied</div>
+      </div>
+      <div class="stat-card interview">
+        <div class="stat-num">{{ stats['interview'] or 0 }}</div>
+        <div class="stat-label">Interviews</div>
+      </div>
+      <div class="stat-card offer">
+        <div class="stat-num">{{ stats['offer'] or 0 }}</div>
+        <div class="stat-label">Offers</div>
+      </div>
+      <div class="stat-card rejected">
+        <div class="stat-num">{{ stats['rejected'] or 0 }}</div>
+        <div class="stat-label">Rejected</div>
+      </div>
+    </section>
+
+    <!-- Filter + Search Bar -->
+    <section class="controls">
+      <form method="GET" action="/" class="search-form">
+        <input type="text" name="search" placeholder="Search company or role..." value="{{ search }}" class="search-input"/>
+        <input type="hidden" name="status" value="{{ status_filter }}"/>
+        <button type="submit" class="btn-search">Search</button>
+      </form>
+      <div class="filter-tabs">
+        {% for s in ['All', 'Applied', 'Interview', 'Offer', 'Rejected'] %}
+        <a href="/?status={{ s }}&search={{ search }}"
+           class="tab {% if status_filter == s %}active{% endif %} tab-{{ s|lower }}">
+          {{ s }}
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Jobs Table -->
+    <section class="table-section">
+      {% if jobs %}
+      <table class="jobs-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Company</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Applied Date</th>
+            <th>Link</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for job in jobs %}
+          <tr class="job-row">
+            <td class="row-num">{{ loop.index }}</td>
+            <td class="company-name">{{ job['company'] }}</td>
+            <td class="role-name">{{ job['role'] }}</td>
+            <td><span class="badge badge-{{ job['status']|lower }}">{{ job['status'] }}</span></td>
+            <td class="date-cell">{{ job['applied_date'] or '—' }}</td>
+            <td>
+              {% if job['link'] %}
+              <a href="{{ job['link'] }}" target="_blank" class="link-btn">View ↗</a>
+              {% else %}—{% endif %}
+            </td>
+            <td class="actions">
+              <a href="/edit/{{ job['id'] }}" class="btn-edit">Edit</a>
+              <form method="POST" action="/delete/{{ job['id'] }}" style="display:inline"
+                    onsubmit="return confirm('Delete this application?')">
+                <button type="submit" class="btn-delete">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% if job['notes'] %}
+          <tr class="notes-row">
+            <td colspan="7" class="notes-cell">📝 {{ job['notes'] }}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">🗂️</div>
+        <p>No applications yet. Start tracking your journey!</p>
+        <a href="/add" class="btn-add">Add First Application</a>
+      </div>
+      {% endif %}
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

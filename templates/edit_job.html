@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Application — JobTrackr</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">◎</span>
+        <span>JobTrackr</span>
+      </a>
+      <span class="page-title">Edit Application</span>
+    </div>
+  </header>
+  <main>
+    <div class="form-container">
+      <h2 class="form-heading">Update Application</h2>
+      <form method="POST" action="/edit/{{ job['id'] }}" class="job-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Company Name *</label>
+            <input type="text" name="company" required value="{{ job['company'] }}"/>
+          </div>
+          <div class="form-group">
+            <label>Role / Position *</label>
+            <input type="text" name="role" required value="{{ job['role'] }}"/>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select name="status">
+              {% for s in ['Applied', 'Interview', 'Offer', 'Rejected'] %}
+              <option value="{{ s }}" {% if job['status'] == s %}selected{% endif %}>{{ s }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Applied Date</label>
+            <input type="date" name="applied_date" value="{{ job['applied_date'] or '' }}"/>
+          </div>
+          <div class="form-group full-width">
+            <label>Job Posting Link</label>
+            <input type="url" name="link" value="{{ job['link'] or '' }}" placeholder="https://..."/>
+          </div>
+          <div class="form-group full-width">
+            <label>Notes</label>
+            <textarea name="notes" rows="3">{{ job['notes'] or '' }}</textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <a href="/" class="btn-cancel">Cancel</a>
+          <button type="submit" class="btn-submit">Update →</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

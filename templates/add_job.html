@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Application — JobTrackr</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">◎</span>
+        <span>JobTrackr</span>
+      </a>
+      <span class="page-title">New Application</span>
+    </div>
+  </header>
+  <main>
+    <div class="form-container">
+      <h2 class="form-heading">Track a New Application</h2>
+      <form method="POST" action="/add" class="job-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Company Name *</label>
+            <input type="text" name="company" required placeholder="e.g. Google, Infosys, Startup XYZ"/>
+          </div>
+          <div class="form-group">
+            <label>Role / Position *</label>
+            <input type="text" name="role" required placeholder="e.g. SWE Intern, Full Stack Intern"/>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select name="status">
+              <option value="Applied">Applied</option>
+              <option value="Interview">Interview</option>
+              <option value="Offer">Offer</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Applied Date</label>
+            <input type="date" name="applied_date"/>
+          </div>
+          <div class="form-group full-width">
+            <label>Job Posting Link</label>
+            <input type="url" name="link" placeholder="https://..."/>
+          </div>
+          <div class="form-group full-width">
+            <label>Notes</label>
+            <textarea name="notes" rows="3" placeholder="Any notes, referral info, contacts..."></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <a href="/" class="btn-cancel">Cancel</a>
+          <button type="submit" class="btn-submit">Save Application →</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>
