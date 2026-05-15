@@ -1,6 +1,6 @@
 # 🎯 JobTrackr — Internship Application Tracker
 
-A clean, full-stack web app to track your internship applications. Built with **Python Flask + SQLite**.
+A clean, full-stack web app to track your internship applications. Built with **Python Flask + SQLite**
 
 ---
 
