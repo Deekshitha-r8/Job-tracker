@@ -42,10 +42,11 @@ python app.py
 Go to: http://127.0.0.1:5000
 
 ---
-
 ## 📁 Folder Structure
+
+```
 job-tracker/
-├── app.py               ← Main Flask app (routes + DB logic)
+├── app.py               ← Main Flask app
 ├── jobs.db              ← Auto-created SQLite database
 ├── requirements.txt     ← Python dependencies
 ├── templates/
@@ -53,8 +54,10 @@ job-tracker/
 │   ├── add_job.html     ← Add application form
 │   └── edit_job.html    ← Edit application form
 └── static/
-├── css/style.css    ← All styles
-└── js/main.js       ← Minor JS enhancements
+    ├── css/style.css    ← All styles
+    └── js/main.js       ← Minor JS enhancements
+```
+
 ---
 
 ## 🌐 Deploy to Render (Free Hosting)
